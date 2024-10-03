@@ -8,6 +8,6 @@ class SeatEntity(Base):
     id = Column(UUID, primary_key=True)
     travel_id = Column(UUID, ForeignKey("travels.id"), nullable=False)
     position = Column(Integer, nullable=False)
-    is_free = Column(Boolean, nullable=False, default=True) # Add a trigger to change value when booking is created?
+    is_free = Column(Boolean, nullable=False, server_default="true") # Add a trigger to change value when booking is created?
     created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
-    updated_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now(), onupdate=func.now())
+    updated_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now(), server_onupdate=func.now())

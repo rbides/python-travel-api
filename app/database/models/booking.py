@@ -11,4 +11,4 @@ class BookingEntity(Base):
     travel_id = Column(UUID, ForeignKey("travels.id"), nullable=False)
     amount = Column(Numeric(7, 2), nullable=False)
     created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
-    updated_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now(), onupdate=func.now())
+    updated_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now(), server_onupdate=func.now())
