@@ -1,0 +1,38 @@
+  
+services:
+  python-db-travel:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: "postgres2024"
+    ports:
+      - "5432:5432"
+    networks:
+      - python-travel-net
+    container_name: python-db-travel
+  python-run-migrations:
+    build:
+      context: .
+    env_file: .env
+    ports:
+      - "5433:5433"
+    networks:
+      - python-travel-net
+    depends_on: 
+      - python-db-travel
+    command: alembic upgrade head
+  python-travel-api:
+    build:
+      context: .
+    env_file: .env
+    ports:
+      - "8080:8080"
+    networks:
+      - python-travel-net
+    container_name: python-travel-api
+    depends_on:
+      - python-db-travel
+      - python-run-migrations
+networks:
+  python-travel-net:
+    driver: bridge
+    name: python-travel-net
