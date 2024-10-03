@@ -31,7 +31,7 @@ services:
     container_name: python-travel-api
     depends_on:
       - python-db-travel
-      - python-run-migrations
+      # - python-run-migrations
 networks:
   python-travel-net:
     driver: bridge
