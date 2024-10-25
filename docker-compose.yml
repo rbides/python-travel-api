@@ -25,13 +25,15 @@ services:
       context: .
     env_file: .env
     ports:
-      - "8080:8080"
+      - "8000:8000"
     networks:
       - python-travel-net
+    volumes:
+      - .:/app # allows live-reload
     container_name: python-travel-api
     depends_on:
       - python-db-travel
-      # - python-run-migrations
+      - python-run-migrations
 networks:
   python-travel-net:
     driver: bridge

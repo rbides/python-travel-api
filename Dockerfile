@@ -8,7 +8,7 @@ RUN poetry config virtualenvs.create false \
 
 COPY . /app
 
-# EXPOSE 8000
+EXPOSE 8000
 WORKDIR /app
 
-CMD ["uvicorn", "app.main:app", "--reload"]
+CMD ["uvicorn", "app.main:app", "--reload", "--host", "0.0.0.0"]
