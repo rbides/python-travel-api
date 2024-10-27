@@ -4,10 +4,10 @@ from app.service.models import User, UserUpdate
 
 
 
-def get():
+def get() -> list[User]:
     return repo.get()
 
-def get_by_id(id: UUID):
+def get_by_id(id: UUID) -> User:
     return repo.get_by_id(id)
 
 def create(user: User):

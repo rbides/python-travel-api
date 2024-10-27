@@ -1,11 +1,10 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, status
 
 
 router = APIRouter(
     prefix="/health",
-    # tags=[""],
 )
 
-@router.get("/")
+@router.get("/", status_code=status.HTTP_200_OK)
 def health_check():
-    return 200
+    return "Service Alive!"

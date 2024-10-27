@@ -4,10 +4,10 @@ from app.service.models import Travel, TravelUpdate
 
 
 
-def get():
+def get() -> list[Travel]:
     return repo.get()
 
-def get_by_id(id: UUID):
+def get_by_id(id: UUID) -> Travel:
     return repo.get_by_id(id)
 
 def create(travel: Travel):
