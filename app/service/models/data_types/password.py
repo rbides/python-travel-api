@@ -1,0 +1,1 @@
+# TODO: Password type for auto hashing the password and use it (almost) everywhere

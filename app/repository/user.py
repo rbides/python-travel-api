@@ -8,9 +8,9 @@ from app.service.errors import UserNotFoundException
 from app.service.models import User, UserUpdate
 
 
-def add(user: User):
+def add(user: User, hashed_password: str):
     with Session.begin() as session:
-        session.add(UserEntity(**user.model_dump()))
+        session.add(UserEntity(**user.model_dump(), password=hashed_password))
 
 def update(id: UUID, user: UserUpdate):
     with Session.begin() as session:
@@ -34,6 +34,16 @@ def get_by_id(id: UUID) -> User:
     if user is None:
         raise UserNotFoundException()
     return User.model_validate(user)
+
+def get_by_username(username: str) -> User:
+    with Session() as session:
+        user = session.query(UserEntity).where(UserEntity.username==username).first()
+        # print(user.role.permissions[0].permission)
+        if user is None:
+            raise UserNotFoundException()
+        user = User.model_validate(user)
+    print(user.role)
+    return user
 
 def delete(id: UUID):
     with Session.begin() as session:

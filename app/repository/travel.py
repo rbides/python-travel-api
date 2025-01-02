@@ -1,11 +1,14 @@
+from datetime import datetime
+from decimal import Decimal
+from typing import Annotated
 from uuid import UUID
 
-from pydantic import TypeAdapter
-from sqlalchemy import update as sql_update
+from pydantic import BaseModel, PlainSerializer, TypeAdapter
+from sqlalchemy import  update as sql_update
 from app.database.models import TravelEntity
 from app.database import Session
 from app.service.errors import TravelNotFoundException
-from app.service.models import Travel, TravelUpdate
+from app.service.models import Travel, TravelUpdate, TravelFilters
 
 
 def add(travel: Travel):
@@ -22,9 +25,23 @@ def update(id: UUID, travel: TravelUpdate):
         if query.rowcount == 0:
             raise TravelNotFoundException()
 
-def get() -> list[Travel]:
+
+
+class SQLFilters(BaseModel):
+    name: Annotated[str | None, PlainSerializer(lambda x: TravelEntity.name.contains(x))] = None
+    min_price: Annotated[Decimal | None, PlainSerializer(lambda x: TravelEntity.price >= x)] = None
+    max_price: Annotated[Decimal | None, PlainSerializer(lambda x: TravelEntity.price <= x)] = None
+    min_departure: Annotated[datetime | None, PlainSerializer(lambda x: TravelEntity.departure >= x)] = None
+    max_departure: Annotated[datetime | None, PlainSerializer(lambda x: TravelEntity.departure <= x)] = None    
+
+    
+def get(filters: TravelFilters) -> list[Travel]:
+    sql_filters = SQLFilters(**filters.model_dump(exclude_none=True, exclude="order_by"))
     with Session() as session:
-        travels = session.query(TravelEntity).all()
+        query = session.query(TravelEntity)
+        for f in sql_filters.model_dump(exclude_none=True).values():
+            query = query.filter(f)
+        travels = query.order_by(filters.order_by).all()
     ta = TypeAdapter(list[Travel])
     return ta.validate_python(travels)
 

@@ -4,3 +4,4 @@ Base = declarative_base()
 
 from .user import *
 from .travel import *
+from .role import *

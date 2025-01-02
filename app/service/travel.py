@@ -1,11 +1,11 @@
 from uuid import UUID
 from app.repository import travel as repo
-from app.service.models import Travel, TravelUpdate
+from app.service.models import Travel, TravelUpdate, TravelFilters
 
+#TODO: Put the logs here in the service layer
 
-
-def get() -> list[Travel]:
-    return repo.get()
+def get(filters: TravelFilters) -> list[Travel]:
+    return repo.get(filters)
 
 def get_by_id(id: UUID) -> Travel:
     return repo.get_by_id(id)

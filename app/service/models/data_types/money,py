@@ -1,0 +1,15 @@
+""" In Python, Decimal data type is the preferred choice for most tasks
+related to financial calculations.
+
+    Another trick is to multiply by 100 and work as int without the cents
+"""
+
+from decimal import Decimal
+from pydantic import BaseModel
+
+
+class Money(BaseModel):
+    amount: Decimal
+    currency: str
+
+    # TODO 

@@ -1,24 +1,29 @@
 from datetime import datetime
+from decimal import Decimal
+from typing import Annotated
 import uuid
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException, Path, Query, status
 from app.api.models.travel import CreateTravelRequest, UpdateTravelRequest
 from app.service import travel as service
 from app.service.errors.travel import TravelNotFoundException
-from app.service.models import Travel, TravelUpdate
+from app.service.models import Travel, TravelFilters, TravelUpdate
 
 
 router = APIRouter(
     prefix="/travels",
 )
 
+# Using Annotated only on api layer so we have proper documentation for external consumers.
 
 @router.get("", status_code=status.HTTP_200_OK)
-def get_travels() -> list[Travel]:
-    return service.get()
+def get_travels(
+   query_params: Annotated[TravelFilters, Query(title="Filter options")]
+) -> list[Travel]:
+    return service.get(query_params)
 
 
 @router.get("/{travel_id}", status_code=status.HTTP_200_OK)
-def get_travel(travel_id: uuid.UUID) -> Travel:
+def get_travel(travel_id: Annotated[uuid.UUID, Path(title="The id of the travel to get")]) -> Travel:
     try:
         return service.get_by_id(travel_id)
     except TravelNotFoundException as e:
@@ -37,7 +42,7 @@ def create_travel(request: CreateTravelRequest):
     service.create(travel)
 
 @router.put("/{travel_id}", status_code=status.HTTP_200_OK)
-def update_travel(travel_id: uuid.UUID, request: UpdateTravelRequest):
+def update_travel(travel_id: Annotated[uuid.UUID, Path(title="The id of the travel to update")], request: UpdateTravelRequest):
     travel = TravelUpdate(
         name=request.name,
         destination=request.destination,
@@ -50,7 +55,7 @@ def update_travel(travel_id: uuid.UUID, request: UpdateTravelRequest):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=e.detail)
 
 @router.delete("/{travel_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_travel(travel_id: uuid.UUID):
+def delete_travel(travel_id: Annotated[uuid.UUID, Path(title="The id of the travel to delete")]):
     try:
         service.delete(travel_id)
     except TravelNotFoundException as e:
