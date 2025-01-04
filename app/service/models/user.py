@@ -25,6 +25,9 @@ class User(BaseModel):
     @field_validator('role', mode='before')
     def serialize_role(cls, v):
         # print(v.permissions)
+        print(v)
+        if v is None:
+            return Role()
         permissions = []
         for p in v.permissions:
             permissions.append(p.permission)

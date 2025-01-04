@@ -10,7 +10,8 @@ from app.service.models import User, UserUpdate
 
 def add(user: User, hashed_password: str):
     with Session.begin() as session:
-        session.add(UserEntity(**user.model_dump(), password=hashed_password))
+        # TODO: better handling password flow
+        session.add(UserEntity(**user.model_dump(exclude="password"), password=hashed_password))
 
 def update(id: UUID, user: UserUpdate):
     with Session.begin() as session:
@@ -42,7 +43,6 @@ def get_by_username(username: str) -> User:
         if user is None:
             raise UserNotFoundException()
         user = User.model_validate(user)
-    print(user.role)
     return user
 
 def delete(id: UUID):

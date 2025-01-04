@@ -27,6 +27,7 @@ def delete(id: UUID):
     repo.delete(id)
 
 
+# TODO: token_data should probably be at the api layer
 async def get_current_user(token_data: Annotated[TokenData, Depends(auth.get_token_data)]):
     user = repo.get_by_username(username=token_data.username)
     if user is None:

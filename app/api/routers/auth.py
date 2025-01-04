@@ -17,7 +17,7 @@ router = APIRouter(
 async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
     try:
         access_token = auth.login_for_access_token(form_data.username, form_data.password)
-    except:
+    except: # TODO: fix exception handling
         # if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
