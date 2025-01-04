@@ -44,7 +44,6 @@ def create_travel(request: CreateTravelRequest):
     )
     service.create(travel)
 
-# TODO: verify permissions
 @router.put("/{travel_id}", status_code=status.HTTP_200_OK, dependencies=[Security(auth.verify_permissions, scopes=[Permissions.TRAVEL_WRITE.value])])
 def update_travel(travel_id: Annotated[uuid.UUID, Path(title="The id of the travel to update")], request: UpdateTravelRequest):
     travel = TravelUpdate(
@@ -58,7 +57,6 @@ def update_travel(travel_id: Annotated[uuid.UUID, Path(title="The id of the trav
     except TravelNotFoundException as e:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=e.detail)
 
-# TODO: verify permissions
 @router.delete("/{travel_id}", status_code=status.HTTP_204_NO_CONTENT, dependencies=[Security(auth.verify_permissions, scopes=[Permissions.TRAVEL_DELETE.value])])
 def delete_travel(travel_id: Annotated[uuid.UUID, Path(title="The id of the travel to delete")]):
     try:
