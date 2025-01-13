@@ -4,6 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["rbides <renanbides@gmail.com>"]
 readme = "README.md"
+package-mode = false # Fixing a dependency build. Do we need this?
 
 [tool.poetry.dependencies]
 python = "3.10.12"
@@ -19,6 +20,8 @@ python-multipart = "^0.0.19"
 pyjwt = {extras = ["crypto"], version = "^2.10.1"}
 passlib = {extras = ["bcrypt"], version = "^1.7.4"}
 bcrypt = "4.0.1"
+sqladmin = "^0.20.1"
+itsdangerous = "^2.2.0"
 
 
 [build-system]
