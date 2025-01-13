@@ -1,4 +1,5 @@
 from sqladmin import ModelView
+
 from app.database.models.travel import TravelEntity
 
 
@@ -14,4 +15,6 @@ class TravelAdmin(ModelView, model=TravelEntity):
     ]
 
 
-# If we wanted to use a view for User table, check this link https://aminalaee.dev/sqladmin/cookbook/working_with_passwords/
+# If we wanted to use a view for User table,
+# check this link
+# https://aminalaee.dev/sqladmin/cookbook/working_with_passwords/

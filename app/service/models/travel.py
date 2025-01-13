@@ -2,24 +2,26 @@ from datetime import datetime
 from decimal import Decimal
 from typing import Literal
 from uuid import UUID
+
 from pydantic import BaseModel, ConfigDict, Field
 
 
 class Travel(BaseModel):
     model_config = ConfigDict(from_attributes=True)
-    
+
     id: UUID
     name: str
     destination: str
-    price: float # TODO: Create value type
+    price: float  # TODO: Create value type
     departure: datetime
     created_at: datetime | None = None
     updated_at: datetime | None = None
 
+
 class TravelUpdate(BaseModel):
     name: str | None = None
     destination: str | None = None
-    price: float | None = None # TODO: Create value type
+    price: float | None = None  # TODO: Create value type
     departure: datetime | None = None
     updated_at: datetime = datetime.now()
 

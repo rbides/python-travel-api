@@ -22,7 +22,28 @@ passlib = {extras = ["bcrypt"], version = "^1.7.4"}
 bcrypt = "4.0.1"
 sqladmin = "^0.20.1"
 itsdangerous = "^2.2.0"
+black = "^24.10.0"
+pre-commit = "^4.0.1"
+flake8 = "^7.1.1"
+isort = "^5.13.2"
 
+[tool.black]
+line-length = 79
+exclude = '''
+    /(
+    \.git
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | buck-out
+    | build
+    )/
+'''
+
+[tool.isort]  
+skip = ["__init__.py"]
 
 [build-system]
 requires = ["poetry-core"]

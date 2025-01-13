@@ -1,9 +1,10 @@
 from fastapi import FastAPI
 from sqladmin import Admin
-from app.api.routers import travel, user, health_check, auth
-from app.database.session import engine
+
 from app.admin.auth_backend import authentication_backend
 from app.admin.views import TravelAdmin
+from app.api.routers import auth, health_check, travel, user
+from app.database.session import engine
 
 app = FastAPI()
 

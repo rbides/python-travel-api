@@ -1,7 +1,9 @@
+# flake8: noqa
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
-from .user import *
-from .travel import *
 from .role import *
+
+# to avoid breaking table relationships
+from .user import *
