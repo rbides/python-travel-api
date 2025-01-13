@@ -12,3 +12,6 @@ class TravelAdmin(ModelView, model=TravelEntity):
         TravelEntity.created_at,
         TravelEntity.updated_at,
     ]
+
+
+# If we wanted to use a view for User table, check this link https://aminalaee.dev/sqladmin/cookbook/working_with_passwords/
