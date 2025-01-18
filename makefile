@@ -16,4 +16,7 @@ down:
 build:
 	docker compose build
 
-.PHONY: create_migration migrate_up migrate_down up down build
+test:
+	pytest -s
+
+.PHONY: create_migration migrate_up migrate_down up down build test
