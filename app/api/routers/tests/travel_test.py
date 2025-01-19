@@ -17,6 +17,8 @@ travel_example = Travel(
 )
 
 
+# TODO: Should we mock the service layer
+#  or the db layer as in repo (sqlalchemy.orm.Query.get) ?
 def test_get_by_id_success(mocker):
     id = UUID("813bf2d2-48f1-48ee-976e-49e3f7b21e9e")
     mocker.patch(
